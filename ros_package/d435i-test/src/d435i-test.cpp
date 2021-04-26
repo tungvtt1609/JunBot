@@ -19,9 +19,13 @@ int main(int argc, char * argv[])
 
     std::map<int, rs2::frame> render_frames;
     std::vector<rs2::frame> new_frames;
+    //rs2::rs2_intrinsics intrinsics = pipe.get_intrinsics();
+    auto const intrinsics = pipe.get_active_profile().get_stream(RS2_STREAM_COLOR).as<rs2::video_stream_profile>().get_intrinsics();
+    std::cout << "Distortion Coefficients : [" << intrinsics.coeffs[0] << "," << intrinsics.coeffs[1] << "," <<
+                    intrinsics.coeffs[2] << "," << intrinsics.coeffs[3] << "," << intrinsics.coeffs[4] << "]" << std::endl;
 
     cv::Mat image;
-
+    int count = 0;
     while (1) 
     {
         rs2::frameset fs = pipe.wait_for_frames();;
@@ -33,8 +37,19 @@ int main(int argc, char * argv[])
         cv::imshow("Display Image", color);
 
         char c = (char)cv::waitKey(25);
-        if(c == 27)
-            exit(0);
+        if(c == 27){
+            std::string name =  std::to_string(count) + ".png";
+            cv::imwrite(name, color);
+            count ++;
+            std::cout << "saved " << count << std::endl;
+        }
+
+        if(c == 's')
+        {
+            std::string name = std::to_string(count) + ".png";
+            cv::imwrite(name, color);
+        }
+
     }
 
     return EXIT_SUCCESS;

@@ -1,0 +1,44 @@
+Average error: 
+The error of picture 1 is 0.0399598 pixel
+The error of picture 2 is 0.036859 pixel
+The error of picture 3 is 0.0562552 pixel
+The error of picture 4 is 0.0861792 pixel
+The error of picture 5 is 0.0703627 pixel
+The error of picture 6 is 0.0669202 pixel
+The error of picture 7 is 0.0465808 pixel
+The error of picture 8 is 0.06263 pixel
+The error of picture 9 is 0.0617425 pixel
+The error of picture 10 is 0.0949576 pixel
+The error of picture 11 is 0.0687542 pixel
+The error of picture 12 is 0.0886606 pixel
+The error of picture 13 is 0.099068 pixel
+The error of picture 14 is 0.0594544 pixel
+The error of picture 15 is 0.0464251 pixel
+The error of picture 16 is 0.062359 pixel
+The error of picture 17 is 0.0617562 pixel
+The error of picture 18 is 0.0722229 pixel
+The error of picture 19 is 0.0482823 pixel
+The error of picture 20 is 0.0643733 pixel
+The error of picture 21 is 0.042403 pixel
+The error of picture 22 is 0.0751139 pixel
+The error of picture 23 is 0.0770418 pixel
+The error of picture 24 is 0.0897541 pixel
+The error of picture 25 is 0.0879411 pixel
+The error of picture 26 is 0.0861899 pixel
+The error of picture 27 is 0.125559 pixel
+The error of picture 28 is 0.0993304 pixel
+The error of picture 29 is 0.0462766 pixel
+The error of picture 30 is 0.059901 pixel
+The error of picture 31 is 0.0627202 pixel
+The error of picture 32 is 0.0372348 pixel
+Overall average error is: 0.0682272 pixel
+
+Intrinsic: 
+[611.4288992937151, 0, 333.814356055845;
+ 0, 614.3648232424919, 241.0617294562707;
+ 0, 0, 1]
+
+Distortion parameters: 
+[0.1517306511672211, -0.04747097024352102, -0.001214581694269244, 0.007692224536743487, -1.224828231890558]
+
+

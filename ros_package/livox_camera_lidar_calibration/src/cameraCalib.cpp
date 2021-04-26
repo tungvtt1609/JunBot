@@ -64,10 +64,11 @@ int main(int argc, char **argv) {
 	vector<vector<Point2f>> image_points_seq; /* 保存检测到的所有角点 */
 	string filename;      // 图片名
 	vector<string> filenames;
+	int image_name = 0;
 	while (getline(fin, filename) && filename.size() > 1) {
 		++image_count;
-		filename = camera_folder_path + filename;
-		cout << filename << endl;
+		filename = camera_folder_path + std::to_string(image_name) + ".png";
+		cout << "Path: " << filename << endl;
 		Mat imageInput = imread(filename);
 		if (imageInput.empty()) {  // use the file name to search the photo
         	break;
@@ -87,7 +88,8 @@ int main(int argc, char **argv) {
 			exit(1);
 		}
 		else {
-			Mat view_gray;
+			std::cout << "Hello !!!!" << std::endl;
+			Mat view_gray = imageInput.clone();
 			cvtColor(imageInput, view_gray, cv::COLOR_RGB2GRAY);  // 转灰度图
 
 			/* 亚像素精确化 */
@@ -96,16 +98,17 @@ int main(int argc, char **argv) {
 			// （-1，-1）表示没有死区
 			// TermCriteria 角点的迭代过程的终止条件, 可以为迭代次数和角点精度两者的组合
 			cornerSubPix(view_gray, image_points_buf, Size(5, 5), Size(-1, -1), TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 30, 0.1));
-
+			std::cout << "Hello !!!!" << std::endl;
 			image_points_seq.push_back(image_points_buf);  // 保存亚像素角点
 
 			/* 在图像上显示角点位置 */
 			drawChessboardCorners(view_gray, board_size, image_points_buf, false); // 用于在图片中标记角点
-
-			imshow("Camera Calibration", view_gray);       // 显示图片
-
-			waitKey(1000); //暂停1S      
+			std::cout << "Hello !!!!" << std::endl;
+			//imshow("Camera Calibration", view_gray);       // 显示图片
+			
+			waitKey(0); //暂停1S      
 		}
+		image_name++;
 	}
 	// int CornerNum = board_size.width * board_size.height;  // 每张图片上总的角点数
 
