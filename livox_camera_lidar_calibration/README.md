@@ -1,5 +1,3 @@
-[中文文档](doc_resources/README_cn.md)
-
 ## Camera-LiDAR-Calibration Manual
 
 This solution provides a method for manually calibrating the extrinsic parameters between Livox LiDAR  and camera, which has been verified on series Mid-40, Horizon and Tele-15. It includes the calibration of camera intrinsic parameters, obtaining of calibration data, the calculation of extrinsic parameters between camera and LiDAR,  and some examples of camera LiDAR fusion application. In this solution, the board corners are used as calibration targets. Thanks to the non-repetitive scanning characteristics of Livox LiDAR, we can find the accurate position of corner in high density point cloud more easily. At the same time, we can get a better calibration result and a better LiDAR camera fusion.
@@ -41,6 +39,7 @@ You can skip this step if they are already installed.
 - [Eigen installation](http://eigen.tuxfamily.org/index.php?title=Main_Page)
 
 - [Ceres-solver installation](http://ceres-solver.org/)
+- [OpenCV (Qt enabled)](http://eyyuptemlioglu.blogspot.com/2017/07/opencv-installation-on-ubuntu-16.html)
 
 #### 1.3 Download source code and compile
 
@@ -162,7 +161,10 @@ In this solution we use Haikang camera supervisor MVS to connect and turn on the
 rosbag record /livox/lidar
 ```
 
+
 3. Save a photo and a rosbag of 10 seconds for each data
+
+##### Option: --duration= to add time record
 
 4. After collecting all the data, put photos in data/photo folder; LiDAR rosbag in data/lidar folder.
 
