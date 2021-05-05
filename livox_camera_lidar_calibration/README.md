@@ -39,7 +39,10 @@ You can skip this step if they are already installed.
 - [Eigen installation](http://eigen.tuxfamily.org/index.php?title=Main_Page)
 
 - [Ceres-solver installation](http://ceres-solver.org/)
+
 - [OpenCV (Qt enabled)](http://eyyuptemlioglu.blogspot.com/2017/07/opencv-installation-on-ubuntu-16.html)
+
+- [RealSense SDK](https://github.com/IntelRealSense/librealsense/blob/master/doc/installation.md)
 
 #### 1.3 Download source code and compile
 
@@ -84,7 +87,7 @@ Install MATLAB to calculate the extrinsic parameters, or use cameraCalib node.
 
 Parameters adjustment
 
-Make sure that the selected camera has a pinhole imaging model. At first, please adjust the basic parameters(including the focus and photo dimension, etc) of the camera itself. In this case we use the [Livox Horizon Lidar](https://www.livoxtech.com/horizon) and [Haikang Industrial Camera MV-CE060-10UC](https://www.hikrobotics.com/vision/visioninfo.htm?type=42&oid=2627) , as shown in the figure below. To ensure that the field of view of the photo and the field of LiDAR point cloud are consistent, the photo dimension needs to be modified according to the FOV(field of view) of LiDAR, the Horizon ’s FOV is 81.7 (horizontal) x 25.1 (vertical), so the photos used in this case have a dimension of 1520 (width) x 568 (height) pixels.
+Make sure that the selected camera has a pinhole imaging model. At first, please adjust the basic parameters(including the focus and photo dimension, etc) of the camera itself. In this case we use the [Livox Horizon Lidar](https://www.livoxtech.com/horizon) and [RealSense D435i](https://www.intelrealsense.com/depth-camera-d435i/) , as shown in the figure below. To ensure that the field of view of the photo and the field of LiDAR point cloud are consistent, the photo dimension needs to be modified according to the FOV(field of view) of LiDAR, the Horizon ’s FOV is 81.7 (horizontal) x 25.1 (vertical), so the photos used in this case have a dimension of 1520 (width) x 568 (height) pixels.
 
 <div align=center><img src="doc_resources/lidar_camera.png"></div>
 
