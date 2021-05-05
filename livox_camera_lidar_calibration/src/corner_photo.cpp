@@ -136,6 +136,7 @@ int main(int argc, char **argv) {
         writeData(output_name, corners[t].x, corners[t].y, t);
     }
     
+    
     cout << endl << "Result saved, tap a random key to finish the process" << endl;
     cv::namedWindow("output");
     imshow("output", result_img);
