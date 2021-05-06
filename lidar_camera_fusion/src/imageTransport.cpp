@@ -1,14 +1,23 @@
+#include <ros/ros.h>
+#include <image_transport/image_transport.h>
+#include <cv_bridge/cv_bridge.h>
+
 #include <librealsense2/rs.hpp>
 #include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
 #include <string>
 #include <iostream>
 #include <stdio.h>
 #include <stdarg.h>       
+#include <sstream>
 
 int main(int argc, char * argv[])
 {
+
     rs2::log_to_console(RS2_LOG_SEVERITY_ERROR);
 
+    // Setup RealSense Camera
     rs2::colorizer color_map;
     rs2::rates_printer printer;
     rs2::pipeline pipe;
@@ -26,20 +35,38 @@ int main(int argc, char * argv[])
 
     cv::Mat image;
     int count = 0;
-    while (1) 
+
+    // Node init
+    ros::init(argc, argv, "rs_image");
+    ros::NodeHandle nh;
+    image_transport::ImageTransport it(nh);
+    image_transport::Publisher pub = it.advertise("camera/image", 1);
+
+    sensor_msgs::ImagePtr msg;
+
+    ros::Rate loop_rate(5);
+
+    while (nh.ok()) 
     {
         rs2::frameset fs = pipe.wait_for_frames();;
 
         rs2::frame color_frame = fs.get_color_frame();
         cv::Mat color(cv::Size(640, 480), CV_8UC3, (void*)color_frame.get_data(), cv::Mat::AUTO_STEP);
-    //    cv::cvtColor(color, image, cv::COLOR_BGR2RGB);
+        
         cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE );
         cv::imshow("Display Image", color);
+
+        cv::cvtColor(color, image, cv::COLOR_BGR2RGB);
+        msg = cv_bridge::CvImage(std_msgs::Header(), "rgb8", image).toImageMsg();
+        pub.publish(msg);
 
         char c = (char)cv::waitKey(25);
         if(c == 27){
             exit(0);
         }
+
+        ros::spinOnce();
+        loop_rate.sleep();
 
     }
 

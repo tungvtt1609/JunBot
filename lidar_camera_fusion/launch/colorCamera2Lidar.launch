@@ -9,9 +9,9 @@
 
     <param name="threshold_lidar"       type="int" value="80" />  <!-- the limit of messages to transfer to the pcd file, 80 means maximum 80 messages of lidar -->
     
-  <node pkg="camera_lidar_calibration" name="colorLidar" type="colorLidar" output="screen"></node>
+  <node pkg="lidar_camera_fusion" name="colorCamera2Lidar" type="colorCamera2Lidar" output="screen"></node>
   
-  <node name="rviz" pkg="rviz" type="rviz" respawn="true" args="-d $(find camera_lidar_calibration)/launch/config.rviz"/>
+  <node name="rviz" pkg="rviz" type="rviz" respawn="true" args="-d $(find lidar_camera_fusion)/launch/config.rviz"/>
 
 </launch>
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    
+  <node pkg="lidar_camera_fusion" name="imageTransport" type="imageTransport" output="screen"></node>
+  
+
+</launch>
