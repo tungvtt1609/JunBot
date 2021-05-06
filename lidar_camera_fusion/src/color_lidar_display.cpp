@@ -155,7 +155,7 @@ int main(int argc, char **argv) {
 
     ros::Publisher pub = n.advertise<sensor_msgs::PointCloud2>("color_lidar", 10);
 
-    ros::Rate loop_rate(20); // frequence 20 Hz
+    ros::Rate loop_rate(50); // frequence 20 Hz
     
     ROS_INFO("Start to publish the point cloud");
     uint64_t num = 0;
