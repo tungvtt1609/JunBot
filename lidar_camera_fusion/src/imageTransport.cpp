@@ -38,16 +38,7 @@ int main(int argc, char * argv[])
 
         char c = (char)cv::waitKey(25);
         if(c == 27){
-            std::string name =  std::to_string(count) + ".png";
-            cv::imwrite(name, color);
-            count ++;
-            std::cout << "saved " << count << std::endl;
-        }
-
-        if(c == 's')
-        {
-            std::string name = std::to_string(count) + ".png";
-            cv::imwrite(name, color);
+            exit(0);
         }
 
     }
