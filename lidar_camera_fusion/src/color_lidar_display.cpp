@@ -149,7 +149,7 @@ int main(int argc, char **argv) {
     //loadPointcloudFromROSBag(input_bag_path);
 
     image_transport::ImageTransport it(n);
-    image_transport::Subscriber image_sub = it.subscribe("camera/image", 1, imageCallback);
+    image_transport::Subscriber image_sub = it.subscribe("camera/image", 10, imageCallback);
     
     ros::Subscriber pointCloud_sub = n.subscribe("/livox/lidar", 1000, lidarCallback);
 
@@ -218,15 +218,15 @@ int main(int argc, char **argv) {
                 cloud->points[i].g = RGB[1];
                 cloud->points[i].b = RGB[2];
             }
-            
+
             // once lidar_datas receive something new, it will transform it into a ROS cloud type
             sensor_msgs::PointCloud2 output;
             pcl::toROSMsg(*cloud, output);
 
             output.header.frame_id = "livox_frame"; 
             pub.publish(output); // publish the cloud point to rviz
-            loop_rate.sleep();
         }
+        loop_rate.sleep();
     }
     return 0;
 }
