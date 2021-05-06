@@ -29,31 +29,27 @@ void getColor(const cv::Mat &matrinxIn, const cv::Mat &matrix_out, float x, floa
 void loadPointcloudFromROSBag(const string& bag_path);
 
 typedef pcl::PointXYZRGB PointType;
-vector<livox_ros_driver::CustomMsg> lidar_datas; 
+livox_ros_driver::CustomMsg lidar_data; 
 int threshold_lidar;
 string input_photo_path, input_bag_path, intrinsic_path, extrinsic_path;
+cv::Mat src_img;
 
-void loadPointcloudFromROSBag(const string& bag_path) {
-    ROS_INFO("Start to load the rosbag %s", bag_path.c_str());
-    rosbag::Bag bag;
-    try {
-        bag.open(bag_path, rosbag::bagmode::Read);
-    } catch (rosbag::BagException e) {
-        ROS_ERROR_STREAM("LOADING BAG FAILED: " << e.what());
-        return;
+void imageCallback(const sensor_msgs::ImageConstPtr& msg)
+{
+    try
+    {
+        src_img = cv_bridge::toCvShare(msg, "bgr8")->image;
+        cv::imshow("view", src_img);
+        cv::waitKey(30);
     }
-
-    vector<string> types;
-    types.push_back(string("livox_ros_driver/CustomMsg"));  // message title
-    rosbag::View view(bag, rosbag::TypeQuery(types));
-
-    for (const rosbag::MessageInstance& m : view) {
-        livox_ros_driver::CustomMsg livoxCloud = *(m.instantiate<livox_ros_driver::CustomMsg>()); // message type
-        lidar_datas.push_back(livoxCloud);
-        if (lidar_datas.size() > threshold_lidar) {
-            break;
-        }
+    catch (cv_bridge::Exception& e)
+    {
+        ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
     }
+}
+
+void lidarCallback(livox_ros_driver::CustomMsg& msg) {
+    
 }
 
 // use extrinsic and intrinsic to get the corresponding U and V
@@ -91,14 +87,6 @@ void getColor(const cv::Mat &matrix_in, const cv::Mat &matrix_out, float x, floa
 void getParameters() {
     cout << "Get the parameters from the launch file" << endl;
 
-    if (!ros::param::get("input_bag_path", input_bag_path)) {
-        cout << "Can not get the value of input_bag_path" << endl;
-        exit(1);
-    }
-    if (!ros::param::get("input_photo_path", input_photo_path)) {
-        cout << "Can not get the value of input_photo_path" << endl;
-        exit(1);
-    }
     if (!ros::param::get("threshold_lidar", threshold_lidar)) {
         cout << "Can not get the value of threshold_lidar" << endl;
         exit(1);
@@ -108,25 +96,17 @@ void getParameters() {
         exit(1);
     }
     if (!ros::param::get("extrinsic_path", extrinsic_path)) {
-        cout << "Can not get the value o以下程序节点中如果想修改launch文件，需要到src/calibration/launch文件夹中找对应的launch文件。f extrinsic_path" << endl;
+        cout << "Can not get the value of extrinsic_path" << endl;
         exit(1);
     }
 }
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "colorLidar");
+    ros::init(argc, argv, "colorCamera2Lidar");
     ros::NodeHandle n;
 
     // Done
     getParameters();
-
-
-    cv::Mat src_img = cv::imread(input_photo_path);
-    
-    if(src_img.empty()) {  // use the file name to search the photo
-        cout << "No Picture found by photo_path: " << input_photo_path << endl;
-        return 0;
-    }
 
     // Done
     vector<float> intrinsic;
@@ -164,51 +144,55 @@ int main(int argc, char **argv) {
     cv::Size imageSize = src_img.size();
     cv::initUndistortRectifyMap(camera_matrix, distortion_coef, cv::Mat(),cv::getOptimalNewCameraMatrix(camera_matrix, distortion_coef, imageSize, 1, imageSize, 0), imageSize, CV_16SC2, map1, map2);
     
-    // Image Undistortion
-    cv::remap(src_img, src_img, map1, map2, cv::INTER_LINEAR);  // correct the distortion
-
-    int row = src_img.rows;
-    int col = src_img.cols;
-    // cout << row << endl;
-    // cout << col << endl << endl;
-    vector<vector<int>> color_vector;
-    color_vector.resize(row*col);
-    for (unsigned int i = 0; i < color_vector.size(); ++i) {
-        color_vector[i].resize(3);
-    }
-    
-    // read photo and get all RGB information into color_vector
-    ROS_INFO("Start to read the photo ");
-    for (int v = 0; v < row; ++v) {
-        for (int u = 0; u < col; ++u) {
-            // for .bmp photo, the 3 channels are BGR
-            color_vector[v*col + u][0] = src_img.at<cv::Vec3b>(v, u)[2];
-            color_vector[v*col + u][1] = src_img.at<cv::Vec3b>(v, u)[1];
-            color_vector[v*col + u][2] = src_img.at<cv::Vec3b>(v, u)[0];
-        }
-    }
-    ROS_INFO("Finish saving the data ");
-    
     loadPointcloudFromROSBag(input_bag_path);
 
+    image_transport::ImageTransport it(n);
+    image_transport::Subscriber sub = it.subscribe("camera/image", 1, imageCallback);
+    
+    ros::Subscriber sub = n.subscribe("/livox/lidar", 1000, lidarCallback);
+
     ros::Publisher pub = n.advertise<sensor_msgs::PointCloud2>("color_lidar", 10);
+
     ros::Rate loop_rate(20); // frequence 20 Hz
     
     ROS_INFO("Start to publish the point cloud");
     uint64_t num = 0;
     while(n.ok()) {
         ros::spinOnce();
+
+        // Image Undistortion
+        cv::remap(src_img, src_img, map1, map2, cv::INTER_LINEAR);  // correct the distortion
+
+        int row = src_img.rows;
+        int col = src_img.cols;
+        // cout << row << endl;
+        // cout << col << endl << endl;
+        vector<vector<int>> color_vector;
+        color_vector.resize(row*col);
+        for (unsigned int i = 0; i < color_vector.size(); ++i) {
+            color_vector[i].resize(3);
+        }
         
-        if(num < lidar_datas.size()) {
+        // read photo and get all RGB information into color_vector
+        for (int v = 0; v < row; ++v) {
+            for (int u = 0; u < col; ++u) {
+                // for .bmp photo, the 3 channels are BGR
+                color_vector[v*col + u][0] = src_img.at<cv::Vec3b>(v, u)[2];
+                color_vector[v*col + u][1] = src_img.at<cv::Vec3b>(v, u)[1];
+                color_vector[v*col + u][2] = src_img.at<cv::Vec3b>(v, u)[0];
+            }
+        }
+        
+        if(lidar_data.size()) {
             pcl::PointCloud<PointType>::Ptr cloud(new pcl::PointCloud<PointType>);
             cloud->is_dense = false;
             cloud->height = 1;
-            cloud->width = lidar_datas[num].point_num; // get the point number of lidar data
+            cloud->width = lidar_data.point_num; // get the point number of lidar data
             cloud->points.resize(cloud->width);
             for(uint64_t i = 0; i < cloud->points.size() && n.ok(); ++i) {
-                float x = lidar_datas[num].points[i].x;
-                float y = lidar_datas[num].points[i].y;
-                float z = lidar_datas[num].points[i].z;
+                float x = lidar_data.points[i].x;
+                float y = lidar_data.points[i].y;
+                float z = lidar_data.points[i].z;
                 
                 // ignore the invalid point
                 if(x == 0 && y == 0 && z == 0) {  
@@ -240,15 +224,6 @@ int main(int argc, char **argv) {
             output.header.frame_id = "livox_frame"; 
             pub.publish(output); // publish the cloud point to rviz
             loop_rate.sleep();
-            ++num;
-
-        }
-        // clean the data when the process is finished
-        else if(num >= 10) {
-            lidar_datas.clear();
-            num = 0;
-            ROS_INFO("Finish all the process");
-            break;
         }
     }
     
