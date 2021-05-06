@@ -116,7 +116,10 @@ void getParameters() {
 int main(int argc, char **argv) {
     ros::init(argc, argv, "colorLidar");
     ros::NodeHandle n;
+
+    // Done
     getParameters();
+
 
     cv::Mat src_img = cv::imread(input_photo_path);
     
@@ -125,6 +128,7 @@ int main(int argc, char **argv) {
         return 0;
     }
 
+    // Done
     vector<float> intrinsic;
     getIntrinsic(intrinsic_path, intrinsic);
     vector<float> distortion;
@@ -159,6 +163,8 @@ int main(int argc, char **argv) {
     cv::Mat view, rview, map1, map2;
     cv::Size imageSize = src_img.size();
     cv::initUndistortRectifyMap(camera_matrix, distortion_coef, cv::Mat(),cv::getOptimalNewCameraMatrix(camera_matrix, distortion_coef, imageSize, 1, imageSize, 0), imageSize, CV_16SC2, map1, map2);
+    
+    // Image Undistortion
     cv::remap(src_img, src_img, map1, map2, cv::INTER_LINEAR);  // correct the distortion
 
     int row = src_img.rows;

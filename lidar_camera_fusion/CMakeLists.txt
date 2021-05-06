@@ -50,3 +50,6 @@ target_link_libraries(colorCamera2Lidar ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} 
 
 add_executable(imageTransport src/imageTransport.cpp)
 target_link_libraries(imageTransport ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${CERES_LIBRARIES} ${realsense2_LIBRARY})
+
+add_executable(imageSub src/imageSub.cpp)
+target_link_libraries(imageSub ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${CERES_LIBRARIES} ${realsense2_LIBRARY})
