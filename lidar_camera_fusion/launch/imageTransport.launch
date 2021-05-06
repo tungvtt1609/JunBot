@@ -2,6 +2,5 @@
 <launch>
     
   <node pkg="lidar_camera_fusion" name="imageTransport" type="imageTransport" output="screen"></node>
-  <node pkg="lidar_camera_fusion" name="imageSub" type="imageSub" output="screen"></node>
 
 </launch>

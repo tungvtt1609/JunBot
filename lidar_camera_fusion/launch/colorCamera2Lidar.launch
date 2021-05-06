@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
   
-    <param name="intrinsic_path"        value="/home/lacie/catkin_ws/src/TBot/lidar_camera_fusion/data/parameters/intrinsic.txt" />  <!-- intrinsic file -->
-    <param name="extrinsic_path"        value="/home/lacie/catkin_ws/src/TBot/lidar_camera_fusion/data/parameters/extrinsic.txt" />  <!-- extrinsic file -->
+    <param name="intrinsic_path"        value="/home/lacie/catkin_ws/src/TBot/lidar_camera_fusion/parameters/intrinsic.txt" />  <!-- intrinsic file -->
+    <param name="extrinsic_path"        value="/home/lacie/catkin_ws/src/TBot/lidar_camera_fusion/parameters/extrinsic.txt" />  <!-- extrinsic file -->
 
     <param name="threshold_lidar"       type="int" value="80" />  <!-- the limit of messages to transfer to the pcd file, 80 means maximum 80 messages of lidar -->
     
+  <node pkg="lidar_camera_fusion" name="imageTransport" type="imageTransport" output="screen"></node>
+  
   <node pkg="lidar_camera_fusion" name="colorCamera2Lidar" type="colorCamera2Lidar" output="screen"></node>
   
   <node name="rviz" pkg="rviz" type="rviz" respawn="true" args="-d $(find lidar_camera_fusion)/launch/config.rviz"/>

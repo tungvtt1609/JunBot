@@ -23,7 +23,7 @@ int main(int argc, char * argv[])
     rs2::pipeline pipe;
 
     rs2::config cfg;
-    cfg.enable_stream(RS2_STREAM_COLOR, 640, 480, RS2_FORMAT_BGR8, 30);
+    cfg.enable_stream(RS2_STREAM_COLOR, 640, 480, RS2_FORMAT_BGR8, 15);
     pipe.start(cfg);
 
     std::map<int, rs2::frame> render_frames;

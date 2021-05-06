@@ -2,6 +2,8 @@
 #include <std_msgs/Header.h>
 #include <rosbag/bag.h>
 #include <rosbag/view.h>
+#include <image_transport/image_transport.h>
+#include <cv_bridge/cv_bridge.h>
 
 #include <stdio.h>
 #include <cmath>
@@ -39,8 +41,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
     try
     {
         src_img = cv_bridge::toCvShare(msg, "bgr8")->image;
-        cv::imshow("view", src_img);
-        cv::waitKey(30);
+        //cv::imshow("view", src_img);
+        //cv::waitKey(30);
     }
     catch (cv_bridge::Exception& e)
     {
@@ -48,8 +50,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
     }
 }
 
-void lidarCallback(livox_ros_driver::CustomMsg& msg) {
-    
+void lidarCallback(const livox_ros_driver::CustomMsg& msg) {
+    lidar_data = msg;
 }
 
 // use extrinsic and intrinsic to get the corresponding U and V
@@ -141,15 +143,15 @@ int main(int argc, char **argv) {
 
     // use intrinsic matrix and distortion matrix to correct the photo first
     cv::Mat view, rview, map1, map2;
-    cv::Size imageSize = src_img.size();
+    cv::Size imageSize(640, 480);
     cv::initUndistortRectifyMap(camera_matrix, distortion_coef, cv::Mat(),cv::getOptimalNewCameraMatrix(camera_matrix, distortion_coef, imageSize, 1, imageSize, 0), imageSize, CV_16SC2, map1, map2);
     
-    loadPointcloudFromROSBag(input_bag_path);
+    //loadPointcloudFromROSBag(input_bag_path);
 
     image_transport::ImageTransport it(n);
-    image_transport::Subscriber sub = it.subscribe("camera/image", 1, imageCallback);
+    image_transport::Subscriber image_sub = it.subscribe("camera/image", 1, imageCallback);
     
-    ros::Subscriber sub = n.subscribe("/livox/lidar", 1000, lidarCallback);
+    ros::Subscriber pointCloud_sub = n.subscribe("/livox/lidar", 1000, lidarCallback);
 
     ros::Publisher pub = n.advertise<sensor_msgs::PointCloud2>("color_lidar", 10);
 
@@ -160,30 +162,30 @@ int main(int argc, char **argv) {
     while(n.ok()) {
         ros::spinOnce();
 
-        // Image Undistortion
-        cv::remap(src_img, src_img, map1, map2, cv::INTER_LINEAR);  // correct the distortion
+        if (!src_img.empty()){
+            // Image Undistortion
+            cv::remap(src_img, src_img, map1, map2, cv::INTER_LINEAR);  // correct the distortion
 
-        int row = src_img.rows;
-        int col = src_img.cols;
-        // cout << row << endl;
-        // cout << col << endl << endl;
-        vector<vector<int>> color_vector;
-        color_vector.resize(row*col);
-        for (unsigned int i = 0; i < color_vector.size(); ++i) {
-            color_vector[i].resize(3);
-        }
-        
-        // read photo and get all RGB information into color_vector
-        for (int v = 0; v < row; ++v) {
-            for (int u = 0; u < col; ++u) {
-                // for .bmp photo, the 3 channels are BGR
-                color_vector[v*col + u][0] = src_img.at<cv::Vec3b>(v, u)[2];
-                color_vector[v*col + u][1] = src_img.at<cv::Vec3b>(v, u)[1];
-                color_vector[v*col + u][2] = src_img.at<cv::Vec3b>(v, u)[0];
+            int row = src_img.rows;
+            int col = src_img.cols;
+            // cout << row << endl;
+            // cout << col << endl << endl;
+            vector<vector<int>> color_vector;
+            color_vector.resize(row*col);
+            for (unsigned int i = 0; i < color_vector.size(); ++i) {
+                color_vector[i].resize(3);
             }
-        }
+            
+            // read photo and get all RGB information into color_vector
+            for (int v = 0; v < row; ++v) {
+                for (int u = 0; u < col; ++u) {
+                    // for .bmp photo, the 3 channels are BGR
+                    color_vector[v*col + u][0] = src_img.at<cv::Vec3b>(v, u)[2];
+                    color_vector[v*col + u][1] = src_img.at<cv::Vec3b>(v, u)[1];
+                    color_vector[v*col + u][2] = src_img.at<cv::Vec3b>(v, u)[0];
+                }
+            }
         
-        if(lidar_data.size()) {
             pcl::PointCloud<PointType>::Ptr cloud(new pcl::PointCloud<PointType>);
             cloud->is_dense = false;
             cloud->height = 1;
@@ -193,12 +195,12 @@ int main(int argc, char **argv) {
                 float x = lidar_data.points[i].x;
                 float y = lidar_data.points[i].y;
                 float z = lidar_data.points[i].z;
-                
+                    
                 // ignore the invalid point
                 if(x == 0 && y == 0 && z == 0) {  
                     continue;
                 }
-                
+                    
                 // set coordinate for the cloud point
                 cloud->points[i].x = x;
                 cloud->points[i].y = y;
@@ -211,12 +213,12 @@ int main(int argc, char **argv) {
                 if (RGB[0] == 0 && RGB[1] == 0 && RGB[2] == 0) {  
                     continue;
                 }
-                
+                    
                 cloud->points[i].r = RGB[0];
                 cloud->points[i].g = RGB[1];
                 cloud->points[i].b = RGB[2];
-
             }
+            
             // once lidar_datas receive something new, it will transform it into a ROS cloud type
             sensor_msgs::PointCloud2 output;
             pcl::toROSMsg(*cloud, output);
@@ -226,7 +228,6 @@ int main(int argc, char **argv) {
             loop_rate.sleep();
         }
     }
-    
     return 0;
 }
 
