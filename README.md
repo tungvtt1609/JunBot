@@ -1,22 +1,15 @@
 # TBot Setting
 
 ## OpenCR and Dynamixel testing
-1. OpenCR test
+1. OpenCR test[Here](https://emanual.robotis.com/docs/en/parts/controller/opencr10/)
 
-[here](https://emanual.robotis.com/docs/en/parts/controller/opencr10/)
+2. Dynamixel test[Here](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
 
-2. Dynamixel test
-
-[Here](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
-
-3. Dynamixel and OpenCR communication
-
-[Here](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_workbench/)
+3. Dynamixel and OpenCR communication[Here](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_workbench/)
 
 ## Setup Dynamixe's for TBot
 Because Xavier can not install cross compiler for OpenCR so you need use Intel CPU for this step (aleast in when i write this)
-
- [Here](https://emanual.robotis.com/docs/en/platform/turtlebot3/faq/#setup-dynamixels-for-turtlebot3)
+[Here](https://emanual.robotis.com/docs/en/platform/turtlebot3/faq/#setup-dynamixels-for-turtlebot3)
 
 ## AGX Xavier Setup
 
