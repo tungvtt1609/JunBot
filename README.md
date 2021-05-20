@@ -1,3 +1,22 @@
+# TBot Overview
+
+## Hardware
+- TurtleBot3 Waffle Pi Platform (OpenCR 1.0 + Dynamixel XM430-W210)
+- Livox Mid-40
+- Jetson Xavier AGX (16GB RAM)
+- Realsense D435i
+- Realsense T265
+
+## Software
+- Ubuntu 18.04 
+- CUDA 10.2
+- Realsense SDK 
+- Realsense ROS
+- Livox SDK
+- Livox ROS driver
+- ROS Melodic
+- OpenCV 4.2.0
+
 # TBot Setting
 
 ## OpenCR and Dynamixel testing
