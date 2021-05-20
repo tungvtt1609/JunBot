@@ -152,6 +152,7 @@ cd ./opencr_update
 [Here](https://github.com/jetsonhacks/installRealSenseROS)
 
 ### Step 5: Install LivoxSDK and Livox ROS
+- Livox Setup (Pending ...)
 - Livox-SDK
 [Here](https://github.com/Livox-SDK/Livox-SDK)
 - Livox ROS driver
