@@ -164,10 +164,11 @@ cd ./opencr_update
 ```
 
 ### Step 4: Install RealSenseSDK and RealSense ROS
-- cv_bridge for ROS melodic and opencv 4.2.0
-Clone https://github.com/ros-perception/vision_opencv for Melodic branch
+- cv_bridge for ROS melodic and opencv 4.2.0 
 
-Change version OpenCV require in vision_opnecv/cv_brigde/CMakeLists.txt
+Edit this file /opt/ros/melodic/share/cv_bridge/cmake/cv_bridgeConfig.cmake
+
+Find this "/usr/include/opencv" and change to "/usr/include/opencv4"
 
 - RealSenseSKD
 [Here](https://github.com/jetsonhacks/installRealSenseSDK)
