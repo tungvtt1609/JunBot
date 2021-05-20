@@ -29,7 +29,7 @@
 3. Dynamixel and OpenCR communication [Here](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_workbench/)
 
 ## Setup Dynamixe's for TBot
-Because Xavier can not install cross compiler for OpenCR so you need use Intel CPU for this step (aleast in when i write this)
+Because Xavier can not install cross compiler for OpenCR so you need use Intel CPU for this step (at least in when i write this)
 [Here](https://emanual.robotis.com/docs/en/platform/turtlebot3/faq/#setup-dynamixels-for-turtlebot3)
 
 ## AGX Xavier Setup
