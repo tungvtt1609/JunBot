@@ -188,6 +188,15 @@ Follow [here](https://github.com/lacie-life/TBot/tree/main/livox_camera_lidar_ca
 
 ### Step 7: Pending ...
 
+# TBot Running
+
+### colorCamera2Lidar
+```
+roslaunch livox_ros_driver livox_lidar_msg.launch
+roslaunch lidar_camera_fusion colorCamera2Lidar.launch
+```
+
+### TurtleBot3 Control
 
 
 
