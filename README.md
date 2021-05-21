@@ -1,4 +1,4 @@
-# TBot Overview
+# JunBot Overview
 
 ![JunBot](https://github.com/lacie-life/JunBot/blob/main/resources/JunBot.jpg?raw=true)
 
@@ -19,7 +19,7 @@
 - ROS Melodic
 - OpenCV 4.2.0
 
-# TBot Setting
+# JunBot Setting
 
 ## OpenCR and Dynamixel testing
 1. OpenCR test [Here](https://emanual.robotis.com/docs/en/parts/controller/opencr10/)
@@ -151,6 +151,7 @@ echo "export TURTLEBOT3_MODEL=waffle_pi" >> ~/.bashrc
 ```
 
 - OpenCR Setup
+- 
 Connect AGX and OpenCR via USB
 ```
 sudo dpkg --add-architecture armhf
@@ -190,7 +191,7 @@ Follow [here](https://github.com/lacie-life/TBot/tree/main/livox_camera_lidar_ca
 
 ### Step 7: Pending ...
 
-# TBot Running
+# JunBot Running
 
 ### colorCamera2Lidar
 ```
