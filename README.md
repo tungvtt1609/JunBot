@@ -1,14 +1,35 @@
-# TBot Setting
+# JunBot Overview
+
+![JunBot](https://github.com/lacie-life/JunBot/blob/main/resources/JunBot.jpg?raw=true)
+
+## Hardware
+- TurtleBot3 Waffle Pi Platform (OpenCR 1.0 + Dynamixel XM430-W210)
+- Livox Mid-40
+- Jetson Xavier AGX (16GB RAM)
+- Realsense D435i
+- Realsense T265
+
+## Software
+- Ubuntu 18.04 
+- CUDA 10.2
+- Realsense SDK 
+- Realsense ROS
+- Livox SDK
+- Livox ROS driver
+- ROS Melodic
+- OpenCV 4.2.0
+
+# JunBot Setting
 
 ## OpenCR and Dynamixel testing
-1. OpenCR test[Here](https://emanual.robotis.com/docs/en/parts/controller/opencr10/)
+1. OpenCR test [Here](https://emanual.robotis.com/docs/en/parts/controller/opencr10/)
 
-2. Dynamixel test[Here](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
+2. Dynamixel test [Here](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
 
-3. Dynamixel and OpenCR communication[Here](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_workbench/)
+3. Dynamixel and OpenCR communication [Here](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_workbench/)
 
 ## Setup Dynamixe's for TBot
-Because Xavier can not install cross compiler for OpenCR so you need use Intel CPU for this step (aleast in when i write this)
+Because Xavier can not install cross compiler for OpenCR so you need use Intel CPU for this step (at least in when i write this)
 [Here](https://emanual.robotis.com/docs/en/platform/turtlebot3/faq/#setup-dynamixels-for-turtlebot3)
 
 ## AGX Xavier Setup
@@ -130,6 +151,7 @@ echo "export TURTLEBOT3_MODEL=waffle_pi" >> ~/.bashrc
 ```
 
 - OpenCR Setup
+- 
 Connect AGX and OpenCR via USB
 ```
 sudo dpkg --add-architecture armhf
@@ -145,6 +167,12 @@ cd ./opencr_update
 ```
 
 ### Step 4: Install RealSenseSDK and RealSense ROS
+- cv_bridge for ROS melodic and opencv 4.2.0 
+
+Edit this file /opt/ros/melodic/share/cv_bridge/cmake/cv_bridgeConfig.cmake
+
+Find this "/usr/include/opencv" and change to "/usr/include/opencv4"
+
 - RealSenseSKD
 [Here](https://github.com/jetsonhacks/installRealSenseSDK)
 
@@ -152,6 +180,7 @@ cd ./opencr_update
 [Here](https://github.com/jetsonhacks/installRealSenseROS)
 
 ### Step 5: Install LivoxSDK and Livox ROS
+- Livox Setup (Pending ...)
 - Livox-SDK
 [Here](https://github.com/Livox-SDK/Livox-SDK)
 - Livox ROS driver
@@ -162,6 +191,15 @@ Follow [here](https://github.com/lacie-life/TBot/tree/main/livox_camera_lidar_ca
 
 ### Step 7: Pending ...
 
+# JunBot Running
+
+### colorCamera2Lidar
+```
+roslaunch livox_ros_driver livox_lidar_msg.launch
+roslaunch lidar_camera_fusion colorCamera2Lidar.launch
+```
+
+### TurtleBot3 Control
 
 
 
