@@ -4,20 +4,20 @@
 
 ## Hardware
 - TurtleBot3 Waffle Pi Platform (OpenCR 1.0 + Dynamixel XM430-W210)
-- Livox Mid-40
-- Jetson Xavier AGX (16GB RAM)
-- Realsense D435i
+- Hokuyo UST-05LX
+- Jetson Xavier AGX (32GB RAM)
+- Realsense D435i x 2
 - Realsense T265
-
+- ZED 2
+ 
 ## Software
 - Ubuntu 18.04 
 - CUDA 10.2
 - Realsense SDK 
 - Realsense ROS
-- Livox SDK
-- Livox ROS driver
 - ROS Melodic
 - OpenCV 4.2.0
+- ZED SDK 3.6.5
 
 # JunBot Setting
 
@@ -179,25 +179,26 @@ Find this "/usr/include/opencv" and change to "/usr/include/opencv4"
 - RealSense ROS
 [Here](https://github.com/jetsonhacks/installRealSenseROS)
 
-### Step 5: Install LivoxSDK and Livox ROS
-- Livox Setup (Pending ...)
-- Livox-SDK
-[Here](https://github.com/Livox-SDK/Livox-SDK)
-- Livox ROS driver
-[Here](https://github.com/Livox-SDK/livox_ros_driver)
+### Step 5: Hokuyo setting 
 
-### Step 6: Livox-Camera-Calibration
-Follow [here](https://github.com/Livox-SDK/livox_camera_lidar_calibration/blob/master/README.md)
+```
+# install Hokuyp driver
+sudo apt-get install ros-medolic-urg-node
+# Network config
+sudo ip addr add 192.168.0.15/24 broadcast 192.168.0.255 dev eth0
+# Run ROS Node
+rosrun urg_node urg_node _ip_address:=192.168.0.10
+# Test (option without ROS TF)
+rosrun tf static_transform_publisher 0 0 0 0 0 0 1 map laser 10
+```
+
+
+### Step 6: Calibration
+
 
 ### Step 7: Pending ...
 
 # JunBot Running
-
-### colorCamera2Lidar
-```
-roslaunch livox_ros_driver livox_lidar_msg.launch
-roslaunch lidar_camera_fusion colorCamera2Lidar.launch
-```
 
 ### TurtleBot3 Control
 
