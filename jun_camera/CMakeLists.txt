@@ -14,6 +14,9 @@ find_package(catkin REQUIRED COMPONENTS
   diagnostic_updater
 )
 
+find_package(realsense2 REQUIRED)
+find_package(OpenCV 4.2 REQUIRED)
+
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES jun_camera
@@ -25,9 +28,11 @@ catkin_package(
 )
 
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )
+
+add_executable(d435i_capture_node src/camera_capture.cpp)
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
@@ -35,9 +40,11 @@ include_directories(
 # )
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(d435i_capture_node
+  ${catkin_LIBRARIES}
+  ${realsense2_LIBRARY} 
+  ${OpenCV_LIBS}
+)
 
 catkin_install_python(PROGRAMS scripts/set_cams_transforms.py
                       DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

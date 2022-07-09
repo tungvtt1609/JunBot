@@ -195,6 +195,9 @@ rosrun tf static_transform_publisher 0 0 0 0 0 0 1 map laser 10
 
 ### Step 6: Calibration
 
+```
+python src/JunBot/jun_camera/scripts/set_cams_transforms.py cam_1_link cam_2_link 0.7 0.6 0 -90 0 0
+```
 
 ### Step 7: Pending ...
 
