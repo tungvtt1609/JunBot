@@ -13,8 +13,8 @@
 ## Software
 - Ubuntu 18.04 
 - CUDA 10.2
-- Realsense SDK 
-- Realsense ROS
+- Realsense SDK (2.43.0)
+- Realsense ROS (2.2.23)
 - ROS Melodic
 - OpenCV 4.2.0
 - ZED SDK 3.6.5

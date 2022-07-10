@@ -46,6 +46,8 @@ int main(int argc, char * argv[])
 
     int left = 0;
     int right = 0;
+    char left_path[100];
+    char right_path[100];
 
     while (1) 
     {
@@ -72,16 +74,15 @@ int main(int argc, char * argv[])
 
         char c = (char)cv::waitKey(25);
         if(c == 27){
-            sprintf(left, "/home/jun/catkin_ws/src/JunBot/jun_camera/images/left/0-%d.jpg", left);
-            sprintf(right, "/home/jun/catkin_ws/src/JunBot/jun_camera/images/right/1-%d.jpg", right);
-
-            cv::imwrite(left, new_images[0]);
-            cv::imwrite(right, new_images[1]);
+            sprintf(left_path, "/home/jun/catkin_ws/src/JunBot/jun_camera/images/left/0-%d.jpg", left);
+            sprintf(right_path, "/home/jun/catkin_ws/src/JunBot/jun_camera/images/right/1-%d.jpg", right);
+    
+            cv::imwrite(left_path, new_images.at(0));
+            cv::imwrite(right_path, new_images.at(1));
 
             left++;
             right++;
         }
-
     }
 
     return EXIT_SUCCESS;

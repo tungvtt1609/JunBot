@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(jun_camera)
+project(junbot_camera)
 
 find_package(catkin REQUIRED COMPONENTS
   message_generation
