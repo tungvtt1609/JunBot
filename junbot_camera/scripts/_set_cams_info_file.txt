@@ -1,28 +1,28 @@
 {
-    "mode": "y", 
     "azimuth": {
         "step": 1, 
-        "value": 31.0
+        "value": 49.3124
+    }, 
+    "mode": "pitch", 
+    "pitch": {
+        "step": 1, 
+        "value": -22.3
     }, 
     "y": {
         "step": 0.1, 
-        "value": 0.6
+        "value": -0.043000000000000066
     }, 
     "x": {
-        "step": 0.1, 
-        "value": 0.19999999999999998
+        "step": 0.0125, 
+        "value": 0.04499999999999995
     }, 
-    "pitch": {
-        "step": 1, 
-        "value": -10.0
-    }, 
+    "message": "", 
     "z": {
         "step": 0.1, 
-        "value": -0.30000000000000004
+        "value": -0.23000000000000007
     }, 
-    "message": "Invalid key:\u0003", 
     "roll": {
         "step": 1, 
-        "value": 0.0
+        "value": 16.87005
     }
 }
