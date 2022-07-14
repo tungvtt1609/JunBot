@@ -56,15 +56,15 @@ def publish_status(broadcaster, status):
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-        print 'USAGE:'
-        print 'set_cams_transforms.py from_cam to_cam x y z azimuth pitch roll'
-        print 'x, y, z: in meters'
-        print 'azimuth, pitch, roll: in degrees'
+        print ('USAGE:')
+        print ( 'set_cams_transforms.py from_cam to_cam x y z azimuth pitch roll' )
+        print ( 'x, y, z: in meters' )
+        print ( 'azimuth, pitch, roll: in degrees' )
         print
-        print 'If parameters are not given read last used parameters.'
+        print ( 'If parameters are not given read last used parameters.' )
         print
-        print '[OPTIONS]'
-        print '--file <file name> : if given, default values are loaded from file'
+        print ( '[OPTIONS]' )
+        print ( '--file <file name> : if given, default values are loaded from file' )
         sys.exit(-1)
 
     from_cam, to_cam = sys.argv[1:3]
