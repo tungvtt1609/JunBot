@@ -209,6 +209,10 @@ python src/JunBot/jun_camera/scripts/set_cams_transforms.py cam_1_link cam_2_lin
 
 [JunBotGUI](https://github.com/ScarecrowStraw/JunBotGUI)
 
+# TODO
+- [ ] Cartographer SLAM
+- [ ] Odometry fusion
+
 
 
 
