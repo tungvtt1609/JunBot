@@ -1,6 +1,6 @@
 # JunBot Overview
 
-![JunBot](https://github.com/lacie-life/JunBot/blob/junbot-dev/resources/junbot.png?raw=true)
+![JunBot](https://github.com/ScarecrowStraw/JunBot/blob/junbot-dev/resources/junbot.png)
 
 ## Hardware
 - TurtleBot3 Waffle Pi Platform (OpenCR 1.0 + Dynamixel XM430-W210)
