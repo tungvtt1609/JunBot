@@ -3,18 +3,10 @@
   <param name="/use_sim_time" value="true" />
   <arg name="model" default="waffle_pi" doc="model type [burger, waffle, waffle_pi]"/>
 
-  <!-- <param name="urg_node/frame_id" value="plate_top_link" />
-  <node name="urg_node" pkg="urg_node" type="urg_node" /> -->
-
-  <!-- TurtleBot3 -->
-  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
+    <!-- move_base -->
+  <include file="$(find turtlebot3_navigation)/launch/move_base.launch">
     <arg name="model" value="$(arg model)" />
   </include>
-
-    <!-- move_base -->
-  <!-- <include file="$(find turtlebot3_navigation)/launch/move_base.launch">
-    <arg name="model" value="$(arg model)" />
-  </include> -->
 
   <!-- SLAM node -->
   <node name="cartographer_node" pkg="cartographer_ros"
@@ -23,13 +15,20 @@
               $(find cartographer_turtlebot)/configuration_files
           -configuration_basename turtlebot_urg_lidar_2d.lua"
       output="screen">
-    <remap from="points2" to="/camera/depth/points" />
+      <remap from="/imu" to="/flat_imu"/>
+    <!-- <remap from="points2" to="/camera/depth/points" /> -->
   </node>
 
-  <node name="flat_world_imu_node" pkg="cartographer_turtlebot"
+  <!-- <node name="flat_world_imu_node" pkg="cartographer_turtlebot"
       type="cartographer_flat_world_imu_node" output="screen">
     <remap from="imu_in" to="/mobile_base/sensors/imu_data_raw" />
     <remap from="imu_out" to="/imu" />
+  </node> -->
+
+    <!-- flat_world_imu_node -->
+  <node pkg="turtlebot3_slam" type="flat_world_imu_node" name="flat_world_imu_node" output="screen">
+    <remap from="imu_in" to="/imu" />
+    <remap from="imu_out" to="/flat_imu" />
   </node>
 
   <!-- Visualize node -->

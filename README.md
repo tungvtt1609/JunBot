@@ -216,6 +216,14 @@ source install_isolated/setup.bash
 
 ### TurtleBot3 Control
 
+```
+# SLAM simulation in Gazebo
+roslaunch turtlebot3_gazebo turtlebot3_house.launch
+roslaunch turtlebot3_slam turtlebot3_slam.launch
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+
+```
+
 ### Control GUI
 
 [JunBotGUI](https://github.com/ScarecrowStraw/JunBotGUI)
