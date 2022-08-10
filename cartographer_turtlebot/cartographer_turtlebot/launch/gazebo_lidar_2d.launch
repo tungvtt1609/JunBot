@@ -3,8 +3,8 @@
   <param name="/use_sim_time" value="true" />
   <arg name="model" default="waffle_pi" doc="model type [burger, waffle, waffle_pi]"/>
 
-  <param name="urg_node/frame_id" value="plate_top_link" />
-  <node name="urg_node" pkg="urg_node" type="urg_node" />
+  <!-- <param name="urg_node/frame_id" value="plate_top_link" />
+  <node name="urg_node" pkg="urg_node" type="urg_node" /> -->
 
   <!-- TurtleBot3 -->
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">

@@ -202,7 +202,11 @@ python src/JunBot/jun_camera/scripts/set_cams_transforms.py cam_1_link cam_2_lin
 ### Step 7: Cartographer SLAM
 
 ```
+sudo apt install libgmock-dev
 rosdep install --from-paths src --ignore-src --rosdistro=melodic -y -i -r
+
+# or
+catkin_make_isolated --install --use-ninja -DPYTHON_EXECUTABLE=$(which python3)
 
 catkin_make_isolated --install --use-ninja
 source install_isolated/setup.bash
