@@ -222,6 +222,14 @@ roslaunch turtlebot3_gazebo turtlebot3_house.launch
 roslaunch turtlebot3_slam turtlebot3_slam.launch
 roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
+# Save map
+# Finish the first trajectory. No further data will be accepted on it.
+rosservice call /finish_trajectory 0
+
+# Ask Cartographer to serialize its current state.
+# (press tab to quickly expand the parameter syntax)
+rosservice call /write_state "{filename: '${HOME}/Downloads/<map name>.bag.pbstream', include_unfinished_submaps: "true"}"
+
 ```
 
 ### Control GUI

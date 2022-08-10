@@ -1,0 +1,76 @@
+<launch>
+
+  <include file="$(find cartographer_turtlebot)/launch/turtlebot_sim_localisation.launch"/>
+  <include file="$(find cartographer_turtlebot)/launch/pointcloud_to_laserscan.launch"/>
+
+  <node name="multi_level_map_server" pkg="multi_level_map_server" type="multi_level_map_server">
+    <param name="map_file" value="$(find cartographer_turtlebot)/maps4/multi_level.yaml" />
+  </node>
+
+  <!-- Start the level mux -->
+  <node name="level_mux" pkg="multi_level_map_utils" type="level_mux">
+    <param name="default_current_level" value="level1"/>
+    <remap from="/level_mux/map" to="/map"/>
+  </node>
+
+<!--  <node name="level_mux_rviz" pkg="multi_level_map_utils" type="level_mux">
+    <param name="default_current_level" value="level1"/>
+    <remap from="/level_mux/map" to="/map_rviz"/>
+  </node> -->
+
+  <!-- Start the level selector -->
+  <node name="level_selector" pkg="multi_level_map_utils" type="level_selector" />
+
+  <arg name="odom_frame_id"   default="odom"/>
+  <arg name="base_frame_id"   default="base_footprint"/>
+  <arg name="global_frame_id" default="map"/>
+  <arg name="odom_topic" default="odom" />
+  <arg name="laser_topic" default="scan_velodyne" />
+  <arg name="custom_param_file" default="$(find turtlebot_navigation)/param/velodyne_costmap_params.yaml"/>
+
+  <node pkg="mbf_costmap_nav" type="mbf_costmap_nav" respawn="false" name="move_base_flex" output="screen">
+      <param name="tf_timeout" value="1.5"/>
+      <param name="planner_max_retries" value="5"/>
+
+      <!--<rosparam file="$(find turtlebot_navigation)/param/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+      <rosparam file="$(find turtlebot_navigation)/param/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+      <rosparam file="$(find turtlebot_navigation)/param/local_costmap_params.yaml" command="load" />
+      <rosparam file="$(find turtlebot_navigation)/param/global_costmap_params.yaml" command="load" />-->
+
+      <rosparam file="$(find cartographer_turtlebot)/configuration_files/planners.yaml" command="load" /> <!-- equivalent to global_planner_params.yaml -->
+      <!--<rosparam file="$(find turtlebot_move_base_flex)/params/planners.yaml" command="load" /> --><!-- equivalent to global_planner_params.yaml -->
+
+      <rosparam file="$(find cartographer_turtlebot)/configuration_files/controllers.yaml" command="load" /> <!-- equivalent to dwa_local_planner_params.yaml -->
+      <!--<rosparam file="$(find turtlebot_move_base_flex)/params/controllers.yaml" command="load" />--> <!-- equivalent to dwa_local_planner_params.yaml -->
+
+      <!--<rosparam file="$(find turtlebot_mbf_nav)/params/recovery_behaviors.yaml" command="load" />--> <!-- set in move_baseParams.yaml -->
+      <!-- gobal costmap -->
+      <rosparam file="$(find turtlebot_navigation)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <!--<rosparam file="$(find turtlebot_navigation)/param/velodyne_costmap_params.yaml" command="load" ns="global_costmap" />-->
+      <!-- local costmap -->
+      <rosparam file="$(find turtlebot_navigation)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <!--<rosparam file="$(find turtlebot_navigation)/param/velodyne_costmap_params.yaml" command="load" ns="local_costmap" />-->
+      <rosparam file="$(find turtlebot_navigation)/param/local_costmap_params.yaml" command="load" />
+      <rosparam file="$(find turtlebot_navigation)/param/global_costmap_params.yaml" command="load" />
+
+      <rosparam file="$(find turtlebot_navigation)/param/dwa_local_planner_params.yaml" command="load" />
+      <rosparam file="$(find turtlebot_navigation)/param/move_base_params.yaml" command="load" />
+      <rosparam file="$(find turtlebot_navigation)/param/global_planner_params.yaml" command="load" />
+      <rosparam file="$(find turtlebot_navigation)/param/navfn_global_planner_params.yaml" command="load" />
+      <!-- custom param file -->
+      <rosparam file="$(arg custom_param_file)" command="load" ns="global_costmap" />
+      <rosparam file="$(arg custom_param_file)" command="load" ns="local_costmap" />
+
+      <!-- reset frame_id parameters using user input data -->
+<!--      <param name="global_costmap/global_frame" value="$(arg global_frame_id)"/>
+      <param name="global_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
+      <param name="local_costmap/global_frame" value="$(arg odom_frame_id)"/>
+      <param name="local_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
+      <param name="DWAPlannerROS/global_frame_id" value="$(arg odom_frame_id)"/>
+-->
+      <remap from="cmd_vel" to="/mobile_base/commands/velocity"/>
+      <remap from="odom" to="$(arg odom_topic)"/>
+      <remap from="scan" to="$(arg laser_topic)"/>
+  </node>
+
+</launch>

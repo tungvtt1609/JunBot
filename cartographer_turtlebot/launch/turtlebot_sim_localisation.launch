@@ -1,0 +1,56 @@
+<!--
+  Copyright 2016 The Cartographer Authors
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<launch>
+  <arg name="configuration_basename" default="turtlebot_sim_localisation.lua"/>
+
+  <node name="cartographer_node" pkg="cartographer_ros"
+      type="cartographer_node" args="
+          -configuration_directory
+              $(find cartographer_turtlebot)/configuration_files
+          -configuration_basename $(arg configuration_basename)
+	  -load_state_filename /bag/2018-07-02-16-54-04.bag.pbstream
+          -start_trajectory_with_default_topics=false"
+      output="screen">
+    <remap from="points2" to="/velodyne_points" />
+    <remap from="imu" to="/mobile_base/sensors/imu_data" />
+  </node>
+<!--
+  <node name="call_finish_trajectory" pkg="rosservice" type="rosservice"
+      args="call --><!--wait /finish_trajectory 'trajectory_id: 1'"/>
+-->
+  <node name="cartographer_start_trajectory" pkg="cartographer_ros"
+      type="cartographer_start_trajectory" args="
+          -configuration_directory
+              $(find cartographer_turtlebot)/configuration_files
+          -configuration_basename $(arg configuration_basename)
+          -initial_pose='{ to_trajectory_id=0, relative_pose={translation={3.0, 0.0, 0.0},rotation={0.0,0.0,1.570796} }}'"
+      output="screen">
+  </node>
+<!--
+  <node name="flat_world_imu_node" pkg="cartographer_turtlebot"
+      type="cartographer_flat_world_imu_node" output="screen">
+    <remap from="imu_in" to="/mobile_base/sensors/imu_data" />
+    <remap from="imu_out" to="/imu" />
+  </node>
+-->
+<!--
+  <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
+      type="cartographer_occupancy_grid_node" args="-resolution 0.05">
+    <remap from="map" to="/cartographer_map"/>
+  </node>
+-->
+</launch>
