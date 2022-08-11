@@ -7,7 +7,7 @@
               $(find cartographer_turtlebot)/configuration_files
           -configuration_basename $(arg configuration_basename)"
       output="screen">
-    <remap from="points2" to="/velodyne_points" />
+    <remap from="points2" to="/laser_scan" />
     <remap from="/imu" to="/mobile_base/sensors/imu_data"/>
   </node>
 <!--

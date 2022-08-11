@@ -17,7 +17,7 @@
 <launch>
   <arg name="configuration_basename" />
 
-  <include file="$(find turtlebot_bringup)/launch/minimal.launch" />
+  <include file="$(find turtlebot_bringup)/launch/turtlebot3_remote.launch" />
 
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
