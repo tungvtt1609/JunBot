@@ -1,0 +1,16 @@
+<launch>
+  <param name="/use_sim_time" value="true" />
+
+  <node name="cartographer_node" pkg="cartographer_ros"
+      type="cartographer_node" args="
+          -configuration_directory $(find cartographer_turtlebot)/configuration_files
+          -configuration_basename turtlebot_sim.lua
+          -load_state_filename /bag/2018-07-02-16-54-04.bag.pbstream"
+      output="screen">
+    <remap from="points2" to="/velodyne_points" />
+    <remap from="imu" to="/mobile_base/sensors/imu_data" />
+  </node>
+
+  <node name="playbag" pkg="rosbag" type="play"
+      args="--clock /bag/2018-07-06-09-13-27.bag" />
+</launch>

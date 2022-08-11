@@ -199,11 +199,37 @@ rosrun tf static_transform_publisher 0 0 0 0 0 0 1 map laser 10
 python src/JunBot/jun_camera/scripts/set_cams_transforms.py cam_1_link cam_2_link 0.7 0.6 0 -90 0 0
 ```
 
-### Step 7: Pending ...
+### Step 7: Cartographer SLAM
+
+```
+sudo apt install libgmock-dev
+rosdep install --from-paths src --ignore-src --rosdistro=melodic -y -i -r
+
+catkin_make_isolated --install --use-ninja -DPYTHON_EXECUTABLE=$(which python3)
+# or
+catkin_make_isolated --install --use-ninja
+source install_isolated/setup.bash
+```
 
 # JunBot Running
 
 ### TurtleBot3 Control
+
+```
+# SLAM simulation in Gazebo
+roslaunch turtlebot3_gazebo turtlebot3_house.launch
+roslaunch turtlebot3_slam turtlebot3_slam.launch
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+
+# Save map
+# Finish the first trajectory. No further data will be accepted on it.
+rosservice call /finish_trajectory 0
+
+# Ask Cartographer to serialize its current state.
+# (press tab to quickly expand the parameter syntax)
+rosservice call /write_state "{filename: '${HOME}/Downloads/<map name>.bag.pbstream', include_unfinished_submaps: "true"}"
+
+```
 
 ### Control GUI
 

@@ -1,0 +1,13 @@
+<launch>
+
+  <include file="$(find cartographer_turtlebot)/launch/turtlebot_sim_localisation.launch"/>
+  <include file="$(find cartographer_turtlebot)/launch/pointcloud_to_laserscan.launch"/>
+  <arg name="map_level1_file" default="/maps/level1/level1.yaml"/>
+  <arg name="map_level2_file" default="/maps/level2/level2.yaml"/>
+
+  <arg name="map_file" default="$(arg map_level1_file)"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+<!--    <remap from="map" to="/static_map"/> -->
+  </node>
+
+</launch>

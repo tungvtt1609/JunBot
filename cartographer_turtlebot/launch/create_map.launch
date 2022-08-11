@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find cartographer_ros)/launch/assets_writer_ros_map.launch">
+    <arg name=urdf_filename" value=""/>
+  </include>
+</launch>
