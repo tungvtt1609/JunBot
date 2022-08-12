@@ -124,6 +124,17 @@ install(TARGETS cartographer_dev_trajectory_comparison
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
+google_binary(set_initpose_from_rviz
+  SRCS 
+  set_initpose_main.cc
+)
+
+install(TARGETS set_initpose_from_rviz
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 # TODO(cschuet): Add support for shared library case.
 if (${BUILD_GRPC})
   google_binary(cartographer_grpc_node

@@ -15,21 +15,39 @@
 -->
 
 <launch>
+  <!-- Arguments -->
+  <arg name="model" default="waffle_pi" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="configuration_basename" default="junbot_2d_localization.lua"/>
+  <arg name="load_state_filename" default="/home/jun/junbot_ws/map/test-3.pbstream" />
   <param name="/use_sim_time" value="true" />
 
-  <param name="robot_description"
-    textfile="$(find cartographer_ros)/urdf/backpack_2d.urdf" />
+  <!-- TurtleBot3 -->
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
+    <arg name="model" value="$(arg model)" />
+  </include>
 
-  <node name="robot_state_publisher" pkg="robot_state_publisher"
-    type="robot_state_publisher" />
+  <!-- move_base -->
+  <include file="$(find turtlebot3_navigation)/launch/move_base.launch">
+    <arg name="model" value="$(arg model)" />
+  </include>
 
   <node name="cartographer_node" pkg="cartographer_ros"
       type="cartographer_node" args="
-          -configuration_directory $(find cartographer_ros)/configuration_files
-          -configuration_basename backpack_2d_localization.lua
-          -load_state_filename $(arg load_state_filename)"
+          -configuration_directory $(find cartographer_junbot)/configuration_files
+          -configuration_basename junbot_2d_localization.lua
+          -load_state_filename  $(arg load_state_filename)"
       output="screen">
-    <remap from="echoes" to="horizontal_laser_2d" />
+      <remap from="imu" to="/flat_imu" />
+      <remap from="scan" to="/scan" />
+  </node>
+
+  <node name="set_initpose" pkg="cartographer_ros" type="set_initpose_from_rviz" output="screen"
+    args="
+          -configuration_directory $(find cartographer_junbot)/configuration_files
+          -configuration_basename junbot_2d_localization.lua
+          -load_state_filename $(arg load_state_filename)" >
+          <remap from="imu" to="/flat_imu" />
+          <remap from="scan" to="/scan" />
   </node>
 
   <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
@@ -37,6 +55,10 @@
 
   <node name="rviz" pkg="rviz" type="rviz" required="true"
       args="-d $(find cartographer_ros)/configuration_files/demo_2d.rviz" />
-  <node name="playbag" pkg="rosbag" type="play"
-      args="--clock $(arg bag_filename)" />
+
+  <node pkg="turtlebot3_slam" type="flat_world_imu_node" name="flat_world_imu_node" output="screen">
+    <remap from="imu_in" to="/imu" />
+    <remap from="imu_out" to="/flat_imu" />
+  </node>
+
 </launch>
