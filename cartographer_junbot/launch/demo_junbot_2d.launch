@@ -15,10 +15,12 @@
 -->
 
 <launch>
-  <param name="urg_node/frame_id" value="plate_top_link" />
-  <node name="urg_node" pkg="urg_node" type="urg_node" />
+  <param name="/use_sim_time" value="true" />
 
-  <include file="$(find cartographer_turtlebot)/launch/turtlebot.launch">
-    <arg name="configuration_basename" value="turtlebot_urg_lidar_2d.lua" />
-  </include>
+  <include file="$(find cartographer_ros)/launch/backpack_2d.launch" />
+
+  <node name="rviz" pkg="rviz" type="rviz" required="true"
+      args="-d $(find cartographer_ros)/configuration_files/demo_2d.rviz" />
+  <node name="playbag" pkg="rosbag" type="play"
+      args="--clock $(arg bag_filename)" />
 </launch>

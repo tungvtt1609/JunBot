@@ -30,6 +30,7 @@ set(PACKAGE_DEPENDENCIES
   tf2
   tf2_eigen
   tf2_ros
+  tf2_geometry_msgs
   urdf
   visualization_msgs
 )
