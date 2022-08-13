@@ -218,7 +218,7 @@ source install_isolated/setup.bash
 ```
 # SLAM simulation in Gazebo
 roslaunch turtlebot3_gazebo turtlebot3_house.launch
-roslaunch turtlebot3_slam turtlebot3_slam.launch
+roslaunch cartographer_junbot junbot_2d.launch
 roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
 # Save map
@@ -228,6 +228,9 @@ rosservice call /finish_trajectory 0
 # Ask Cartographer to serialize its current state.
 # (press tab to quickly expand the parameter syntax)
 rosservice call /write_state "{filename: '${HOME}/Downloads/<map name>.bag.pbstream', include_unfinished_submaps: "true"}"
+
+# Run navigation
+roslaunch cartographer_junbot demo_junbot_2d_localization.launch
 
 ```
 
