@@ -32,7 +32,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(d435i_capture_node src/camera_capture.cpp)
+# add_executable(d435i_capture_node src/camera_capture.cpp)
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
@@ -40,11 +40,11 @@ add_executable(d435i_capture_node src/camera_capture.cpp)
 # )
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(d435i_capture_node
-  ${catkin_LIBRARIES}
-  ${realsense2_LIBRARY} 
-  ${OpenCV_LIBS}
-)
+# target_link_libraries(d435i_capture_node
+#  ${catkin_LIBRARIES}
+#  ${realsense2_LIBRARY} 
+#  ${OpenCV_LIBS}
+#)
 
 catkin_install_python(PROGRAMS scripts/set_cams_transforms.py
                       DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
