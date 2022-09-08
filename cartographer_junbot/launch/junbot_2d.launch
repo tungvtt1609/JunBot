@@ -28,9 +28,9 @@
     <arg name="model" value="$(arg model)" />
   </include>
 
-  <node name="urg_node" pkg="urg_node" type="urg_node" output="screen">
+  <!-- <node name="urg_node" pkg="urg_node" type="urg_node" output="screen">
       <param name="_ip_address" value="192.168.0.10"/>
-  </node>
+  </node> -->
 
   <!-- move_base -->
   <include file="$(find turtlebot3_navigation)/launch/move_base.launch">
