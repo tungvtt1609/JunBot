@@ -69,5 +69,5 @@ rosrun junbot_gui junbot_gui
 - [ ] Test with LCD
 - [ ] Add Initial Pose Estimation Button (Run ACML automatic)
 - [ ] Update icon
-- [ ] Linux Embedded
+- [x] Linux Embedded
 
