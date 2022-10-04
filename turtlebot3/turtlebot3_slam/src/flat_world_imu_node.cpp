@@ -41,8 +41,8 @@ void FlatWorldImuNode::msgCallback(const sensor_msgs::ImuConstPtr imu_in)
     last_published_time_ = imu_in->header.stamp;
     sensor_msgs::Imu imu_out = *imu_in;
     imu_out.linear_acceleration.x = 0.0;
-    imu_out.linear_acceleration.y = 0.0;
-    imu_out.linear_acceleration.z = GRAVITY;
+    imu_out.linear_acceleration.y = 0.0-GRAVITY;
+    imu_out.linear_acceleration.z = 0.0;
     publisher_.publish(imu_out);
   }
 }

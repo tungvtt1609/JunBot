@@ -191,8 +191,13 @@
   </link>
 
 <!-- T265 -->
+  <joint name="t265_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="t265_link" />
+    <origin xyz="0.03 0 0.125" rpy="0 0 0" />
+  </joint>
 
-  <link name="camera_link">
+  <link name="t265_link">
     <visual>
       <origin xyz="0.02 0 0.02" rpy="0 0 0" />
       <geometry>
@@ -202,12 +207,6 @@
     </visual>
   </link>
   
- <joint name="camera_joint" type="fixed">
-    <parent link="base_link" />
-    <child link="camera_link" />
-    <origin xyz="0.03 0 0.125" rpy="0 0 0" />
-  </joint>
-
   <!-- <joint name="camera_joint" type="fixed">
     <origin xyz="0.064 -0.065 0.094" rpy="0 0 0"/>
     <parent link="base_link"/>

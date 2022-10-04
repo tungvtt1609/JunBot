@@ -62,6 +62,8 @@ https://github.com/IntelRealSense/librealsense/blob/master/third-party/libtm/lib
       <arg name="publish_odom_tf"          value="$(arg publish_odom_tf)"/>
     </include>
   </group>
-  <node pkg="tf" type="static_transform_publisher" name="t265_tf_publisher" args="-0.03 0.0 -0.125 0 0 0  t265_pose_frame base_link   100"/>
+  <node pkg="tf" type="static_transform_publisher" name="t265_tf_publisher" args="-0.03 0.0 -0.125 0 0 0  t265_pose_frame base_link 100"/>
+  <!-- <node pkg="tf" type="static_transform_publisher" name="t265_base_link" args="0.0 0.0 0.0 0.0 0.0 0.0 base_link t265_link 100" /> -->
+  <node pkg="tf" type="static_transform_publisher" name="map_t265_odom" args="0.0 0.0 0.0 0.0 0.0 0.0 map t265_odom_frame 100" />
   
 </launch>
