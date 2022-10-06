@@ -29,7 +29,7 @@
         args="-configuration_directory $(find turtlebot3_slam)/config
               -configuration_basename $(arg configuration_basename)"
         output="screen">
-    <remap from="/imu" to="/flat_imu"/>
+    <remap from="/imu" to="/t265/imu"/>
     <!--remap from="/imu" to="/t265/imu"/> -->
     <remap from="/odom" to="/t265/odom/sample"/>
     <!--remap from="points2" to="/camera/depth/points" / -->
@@ -43,7 +43,7 @@
   <!-- flat_world_imu_node -->
   <node pkg="turtlebot3_slam" type="flat_world_imu_node" name="flat_world_imu_node" output="screen">
     <remap from="imu_in" to="/t265/imu" />
-    <remap from="imu_out" to="/flat_imu" />
+    <!--remap from="imu_out" to="/flat_imu" /-->
   </node>
 
   

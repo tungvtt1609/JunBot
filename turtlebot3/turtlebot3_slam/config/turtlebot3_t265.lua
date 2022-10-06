@@ -21,7 +21,7 @@ options = {
   map_frame = "map",
   tracking_frame = "t265_imu_optical_frame", -- imu_link, If you are using gazebo, use 'base_footprint' (libgazebo_ros_imu's bug)
   published_frame = "t265_odom_frame",
-  odom_frame = "odom",
+  odom_frame = "t265_odom_frame",
   provide_odom_frame = false,
   publish_frame_projected_to_2d = false,
   use_odometry = true,
@@ -44,8 +44,8 @@ options = {
 
 MAP_BUILDER.use_trajectory_builder_2d = true
 
-TRAJECTORY_BUILDER_2D.min_range = 0.5
-TRAJECTORY_BUILDER_2D.max_range = 12
+TRAJECTORY_BUILDER_2D.min_range = 0.1
+TRAJECTORY_BUILDER_2D.max_range = 5
 TRAJECTORY_BUILDER_2D.missing_data_ray_length = 3.
 TRAJECTORY_BUILDER_2D.use_imu_data = true
 TRAJECTORY_BUILDER_2D.use_online_correlative_scan_matching = true
