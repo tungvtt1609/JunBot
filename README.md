@@ -246,16 +246,17 @@ rosservice call /write_state "{filename: '${HOME}/Downloads/<map name>.bag.pbstr
 # Run navigation
 roslaunch cartographer_junbot demo_junbot_2d_localization.launch
 
+# User interface
+
+rosrun junbot_gui junbot_gui
+
 ```
-
-### Control GUI
-
-[JunBotGUI](https://github.com/ScarecrowStraw/JunBotGUI)
 
 # TODO
 - [x] Cartographer SLAM with t265
 - [x] AMCL relocalization
 - [x] T265 navigation
+- [ ] User interface
 - [ ] Odometry fusion
 
 
