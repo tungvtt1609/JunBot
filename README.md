@@ -253,7 +253,9 @@ roslaunch cartographer_junbot demo_junbot_2d_localization.launch
 [JunBotGUI](https://github.com/ScarecrowStraw/JunBotGUI)
 
 # TODO
-- [ ] Cartographer SLAM
+- [x] Cartographer SLAM with t265
+- [x] AMCL relocalization
+- [x] T265 navigation
 - [ ] Odometry fusion
 
 
