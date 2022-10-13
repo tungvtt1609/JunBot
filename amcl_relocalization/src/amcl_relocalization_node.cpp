@@ -4,6 +4,8 @@
 #include <geometry_msgs/Pose2D.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/PoseWithCovarianceStamped.h>
+#include <tf/tf.h>
+#include <tf/transform_listener.h>
 #include <sstream>
 
 nav_msgs::Odometry odom;
@@ -11,7 +13,7 @@ nav_msgs::Odometry last_odom;
 double current_RPY[3];
 double current_Yaw;
 
-void odomCallback((const nav_msgs::Odometry::ConstPtr& msg)
+void odomCallback(const nav_msgs::Odometry::ConstPtr& msg)
 {
     // ROS_INFO("I heard: [%s]", msg->data.c_str());
     odom = *msg;
@@ -65,7 +67,7 @@ int main(int argc, char **argv)
             re_init_pose.pose.pose.position.x = odom.pose.pose.position.x;
             re_init_pose.pose.pose.position.y = odom.pose.pose.position.x;
             re_init_pose.pose.pose.position.z = 0;
-            re_init_pose.pose.orientation = odom.pose.pose.orientation;
+            re_init_pose.pose.pose.orientation = odom.pose.pose.orientation;
 
             m_initialposePub.publish(re_init_pose);
 

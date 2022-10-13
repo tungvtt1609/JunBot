@@ -8,15 +8,15 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   nav_msgs
   geometry_msgs
-    tf
+  tf
 )
 
 find_package(OpenCV 4 REQUIRED)
 
 catkin_package(
-#  INCLUDE_DIRS include
+  INCLUDE_DIRS include
 #  LIBRARIES cartographer_junbot
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
 
@@ -26,9 +26,13 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(${PROJECT_NAME}_node src/amcl_relocalization_node.cpp)
+add_executable(${PROJECT_NAME} src/amcl_relocalization_node.cpp)
+target_link_libraries(${PROJECT_NAME}
+   ${catkin_LIBRARIES}
+)
 
-target_link_libraries(${PROJECT_NAME}_node
+add_executable(relocalization_test src/relocalization_test.cpp)
+target_link_libraries(relocalization_test
    ${catkin_LIBRARIES}
 )
 
@@ -48,3 +52,8 @@ install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
+install(TARGETS relocalization_test
+    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)

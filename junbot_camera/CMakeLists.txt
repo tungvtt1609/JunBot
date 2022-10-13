@@ -14,7 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   diagnostic_updater
 )
 
-find_package(realsense2 REQUIRED)
+# find_package(realsense2 REQUIRED)
 find_package(OpenCV 4.2 REQUIRED)
 
 catkin_package(
