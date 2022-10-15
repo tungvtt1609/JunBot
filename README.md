@@ -18,6 +18,7 @@
 - ROS Melodic
 - OpenCV 4.2.0
 - ZED SDK 3.6.5
+- Qt5
 
 # JunBot Setting
 
@@ -198,8 +199,21 @@ rosrun tf static_transform_publisher 0 0 0 0 0 0 1 map laser 10
 ```
 python src/JunBot/jun_camera/scripts/set_cams_transforms.py cam_1_link cam_2_link 0.7 0.6 0 -90 0 0
 ```
+### Step 7: Qt GUI setting
 
-### Step 7: Cartographer SLAM
+```
+sudo apt-get update
+
+sudo apt-get install python3-catkin-tools
+
+sudo apt-get install -y ros-noetic-move-base-msgs
+
+sudo apt install libgl1-mesa-dev ninja-build libyaml-cpp-dev libqtermwidget5-0-dev libutf8proc-dev
+
+sudo apt install qtmultimedia5-dev
+```
+
+### Step 8: Cartographer SLAM
 
 ```
 sudo apt install libgmock-dev
@@ -232,14 +246,17 @@ rosservice call /write_state "{filename: '${HOME}/Downloads/<map name>.bag.pbstr
 # Run navigation
 roslaunch cartographer_junbot demo_junbot_2d_localization.launch
 
+# User interface
+
+rosrun junbot_gui junbot_gui
+
 ```
 
-### Control GUI
-
-[JunBotGUI](https://github.com/ScarecrowStraw/JunBotGUI)
-
 # TODO
-- [ ] Cartographer SLAM
+- [x] Cartographer SLAM with t265
+- [x] AMCL relocalization
+- [x] T265 navigation
+- [ ] User interface
 - [ ] Odometry fusion
 
 
