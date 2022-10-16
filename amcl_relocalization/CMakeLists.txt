@@ -14,7 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
 find_package(OpenCV 4 REQUIRED)
 
 catkin_package(
-  INCLUDE_DIRS include
+#  INCLUDE_DIRS include
 #  LIBRARIES cartographer_junbot
   CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
