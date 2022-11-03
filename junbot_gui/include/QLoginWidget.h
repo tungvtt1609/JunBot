@@ -8,7 +8,8 @@
 #include <QSpinBox>
 
 #include "QCustomWidget.h"
-#include "mainwindow.h"
+//#include "mainwindow.h"
+#include "mainviettel.h"
 
 namespace Ui {
 class LoginWidget;
@@ -42,10 +43,13 @@ private slots:
   void slot_ShowWindow();
   void slot_writeSettings();
 
+  void on_btnLogout_clicked();
+
 private:
   Ui::LoginWidget* ui;
   bool m_bConnected;
-  MainWindow* mainWindow = NULL;
+//  MainWindow* mainWindow = NULL;
+  MainViettel* mainViettel = NULL;
   QString m_qRosIp;
   QString m_qMasterIp;
   QComboBox* fixed_box;

@@ -30,7 +30,7 @@ QLoginWidget::QLoginWidget(QWidget *parent)
 
   readSettings();
 
-  QImage img(":/background/data/background/test.jpg");
+  QImage img(":/background/data/background/vmc_1.jpg");
 
   ui->label_video->setPixmap(QPixmap::fromImage(img).scaled(ui->label_video->size(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
 
@@ -330,14 +330,20 @@ void QLoginWidget::on_btnLogin_clicked() {
 void QLoginWidget::ConnectMaster() {
   int argc;
   char **argv;
-  if (mainWindow != NULL) {
-    mainWindow->close();
+//  if (mainWindow != NULL) {
+//    mainWindow->close();
+//  }
+
+  if (mainViettel != NULL) {
+    mainViettel->close();
   }
+  
+  mainViettel = new MainViettel(argc, argv);
 
-  // Init MainWindow
-  mainWindow = new MainWindow(argc, argv);
+//  connect(mainWindow, SIGNAL(signalDisconnect()), this,
+//          SLOT(slot_ShowWindow()));
 
-  connect(mainWindow, SIGNAL(signalDisconnect()), this,
+  connect(mainViettel, SIGNAL(signalDisconnect()), this,
           SLOT(slot_ShowWindow()));
 
   QCoreApplication::processEvents();
@@ -345,7 +351,10 @@ void QLoginWidget::ConnectMaster() {
   ui->btnLogin->setStyleSheet(
       "border:0px;background-color:rgb(211, 215, 207);color:WHITE；");
 
-  bool isConnect = mainWindow->connectMaster(
+//  bool isConnect = mainWindow->connectMaster(
+//      ui->lineEditMasterIp->text(), ui->lineEditRosIp->text());
+
+  bool isConnect = mainViettel->connectMaster(
       ui->lineEditMasterIp->text(), ui->lineEditRosIp->text());
 
   if (isConnect) {
@@ -357,7 +366,9 @@ void QLoginWidget::ConnectMaster() {
     ui->btnLogin->setStyleSheet(
         "border:0px;background-color:#F81243;color:WHITE；");
     this->hide();
-    mainWindow->show();
+//    mainWindow->show();
+
+    mainViettel->show();
   } else {
     ui->checkBoxAutoLogin->setChecked(false);
     ui->btnLogin->setText("CONNECT");
@@ -692,3 +703,10 @@ void QLoginWidget::on_checkBoxAutoLogin_clicked(bool checked) {
   // pending
 }
 
+
+void QLoginWidget::on_btnLogout_clicked()
+{
+  if (ui->btnLogout->text() == "LOGOUT") {
+    this->close();
+  }
+}

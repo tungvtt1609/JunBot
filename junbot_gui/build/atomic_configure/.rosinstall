@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/tungvo/catkin_ws/src/JunBot/junbot_gui/build/devel/setup.sh

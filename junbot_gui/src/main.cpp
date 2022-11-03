@@ -1,4 +1,5 @@
-#include "mainwindow.h"
+//#include "mainwindow.h"
+#include "mainviettel.h"
 
 #include <QApplication>
 #include <QDesktopWidget>

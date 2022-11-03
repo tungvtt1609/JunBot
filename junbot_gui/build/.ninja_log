@@ -1,0 +1,20 @@
+# ninja log v5
+1	8080	0	CMakeFiles/junbot_gui_autogen	2d8135351176ddf2
+1	8080	0	junbot_gui_autogen/mocs_compilation.cpp	2d8135351176ddf2
+8080	8094	1667201218934684535	ui_mainwindow.h	8f6e2a47eb23d6f6
+8082	8105	1667201218946684973	ui_loginwidget.h	cfbb3f39f5b6ca7f
+8082	8514	1667201219338699283	qrc_resources.cpp	7ebb823a575008f5
+8514	11553	1667201222394810785	CMakeFiles/junbot_gui.dir/src/QAppConfig.cpp.o	55c2512d388fcdd4
+8541	13221	1667201223310844185	CMakeFiles/junbot_gui.dir/src/QJoyStick.cpp.o	97c596b7ad41d484
+8531	13246	1667201223798861974	CMakeFiles/junbot_gui.dir/src/QDashBoard.cpp.o	78c1c29f5e8e9318
+8515	13684	1667201224522888361	CMakeFiles/junbot_gui.dir/src/QCustomWidget.cpp.o	16aae81496989a72
+11554	16515	1667201227354991515	CMakeFiles/junbot_gui.dir/src/QRobotItem.cpp.o	c56c5386ede0c892
+8551	33767	1667201244591617266	CMakeFiles/junbot_gui.dir/src/QLoginWidget.cpp.o	d531bf65943c4f7c
+13223	37309	1667201247395718734	CMakeFiles/junbot_gui.dir/src/main.cpp.o	2c0116b4154b1562
+13246	38043	1667201248871772111	CMakeFiles/junbot_gui.dir/src/mainwindow.cpp.o	f85a166e03ff28a7
+16515	38050	1667201248871772111	CMakeFiles/junbot_gui.dir/junbot_gui_autogen/mocs_compilation.cpp.o	508f79e879430417
+13684	40605	1667201251439864914	CMakeFiles/junbot_gui.dir/qrc_resources.cpp.o	13b3c621d91cc05d
+8558	44461	1667201255296004123	CMakeFiles/junbot_gui.dir/src/QNode.cpp.o	a4a70bdc5db5b60b
+44462	49643	1667201260480191009	devel/lib/junbot_gui/junbot_gui	8b4b6c3eb183d9b1
+12	72	0	CMakeFiles/junbot_gui_autogen	2d8135351176ddf2
+12	72	0	junbot_gui_autogen/mocs_compilation.cpp	2d8135351176ddf2

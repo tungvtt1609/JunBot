@@ -42,7 +42,7 @@ message("${QT_LIBRARIES}")
 
 find_package(Qt5 REQUIRED ${ModuleList})
 
-find_package(OpenCV 4.2 REQUIRED)
+find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
@@ -52,7 +52,8 @@ source_group("Header Files" FILES ${HEADERS})
 source_group("Source Files" FILES ${SOURCES})
 
 set(UI ${CMAKE_CURRENT_LIST_DIR}/ui/mainwindow.ui
-       ${CMAKE_CURRENT_LIST_DIR}/ui/loginwidget.ui)
+       ${CMAKE_CURRENT_LIST_DIR}/ui/loginwidget.ui
+       ${CMAKE_CURRENT_LIST_DIR}/ui/mainviettel.ui)
 
 qt5_wrap_ui(UI_HEADERS ${UI})
 
